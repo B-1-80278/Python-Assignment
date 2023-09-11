@@ -11,4 +11,4 @@ list2 = [1, 2, 3]
 
 list1.insert(index_of_b, list2)
 
-print(list1)
+print(f"Replaced list is {list1}")

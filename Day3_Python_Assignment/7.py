@@ -15,4 +15,5 @@ def fiter_long_words():
 
 fiter_long_words()
 
-print(f"List of words which are greater than 3 are {list_of_words}")
+print(f"Given list is {list1}")
+print(f"List of words which has more than 3 alphabets is {list_of_words}")

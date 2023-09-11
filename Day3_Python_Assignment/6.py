@@ -14,5 +14,5 @@ for i in range(size):
     if list1[i] > largest:
         largest = list1[i]
 
-print(f" User given list is {list1}")
+print(f"User given list is {list1}")
 print(f"Largest number in the list is {largest}")
