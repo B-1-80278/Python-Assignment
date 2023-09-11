@@ -8,7 +8,6 @@ def factorial_calculation(num):
         num -= 1
     return fact
 
-numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-for num in numbers:
+for num in range(11):
     print(f"factorial of {num} is {factorial_calculation(num)}")
