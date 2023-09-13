@@ -3,3 +3,13 @@
 # occurrence of "o" in between. For example, translate("this is fun") should return
 # the string "tothohisos isos fofunon".
 
+sentence = "this is sample"
+vowels = ['a', 'e', 'i', 'o', 'u', ' ']
+translated = ""
+
+for ch in sentence:
+    if ch in vowels:
+        translated += ch
+    else:
+        translated += ch + 'o' + ch
+print(translated)
