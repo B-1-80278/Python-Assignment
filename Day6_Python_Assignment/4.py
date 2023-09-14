@@ -7,9 +7,12 @@
 
 list_of_places = ["KOLKATA", "DELHI", "LONDON", "PARIS", "NEW YORK", "DUBAI"]
 
-for place in list_of_places:
-    if len(place) > 5:
-        print(place)
+def count_now(p1):
+    for place in list_of_places:
+        if len(place) > 5:
+            print(place)
+
+count_now(list_of_places)
 
 
 
