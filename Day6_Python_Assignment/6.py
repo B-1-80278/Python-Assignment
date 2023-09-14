@@ -4,3 +4,10 @@
 # Input:- [‘Sunday’,’Monday’,’Tuesday’,’Wednesday’]
 # Output:- [’Wednesday’, ‘Sunday’, ’Monday’, ’Tuesday’]
 
+list1 = ['Sunday', 'Monday', 'Tuesday', 'Wednesday']
+
+element = list1.pop()  #pop up last element in list
+
+list1.insert(0, element)
+
+print(list1)

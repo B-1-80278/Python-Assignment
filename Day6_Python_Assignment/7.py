@@ -7,4 +7,3 @@ num_array = np.array([1, 7, 13, 105])
 occupied_size= num_array.nbytes
 
 print(f"memory occupied by the array is {occupied_size} bytes")
-
