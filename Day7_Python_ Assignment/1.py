@@ -5,5 +5,18 @@
 # tired nude Maori","Rise to vote sir", or the exclamation "Dammit, I'm mad!".
 # Note that punctuation, capitalization, and spacing are usually ignored.
 
-sentence = "Was it a rat I saw?"
+sentence = "Go hanga salami I'm a lasagna hog."
+all_lower = sentence.lower()
+new_sentence = []
+
+for ch in all_lower:
+    if ch.isalpha():
+        new_sentence.append(ch)
+
+new_reversed_sentence = new_sentence[::-1]
+
+if new_sentence == new_reversed_sentence:
+    print("Given phrase is palindrome...")
+else:
+    print("Given phrase is not palindrome...")
 
