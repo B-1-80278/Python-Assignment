@@ -3,12 +3,14 @@
 # write a function to check a sentence to see if it is a pangram or not.
 
 string1 = "The quick brown fox jumps over the lazy dog"
-list1 = []
+set1 = set()
 def check_pangram():
-    for ch in string1:
+    for ch in string1.lower():
         if ch.isalpha():
-            list1.append(ch)
-    unique_set = set(list1)
+            set1.add(ch)
+
+    unique_set = set(set1)
+    print(unique_set)
 
     if len(unique_set) < 26:
         print("The given sentence is not pangram.....")

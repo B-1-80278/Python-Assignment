@@ -19,4 +19,3 @@ if new_sentence == new_reversed_sentence:
     print("Given phrase is palindrome...")
 else:
     print("Given phrase is not palindrome...")
-
