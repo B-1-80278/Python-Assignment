@@ -5,3 +5,5 @@
 # tired nude Maori","Rise to vote sir", or the exclamation "Dammit, I'm mad!".
 # Note that punctuation, capitalization, and spacing are usually ignored.
 
+sentence = "Was it a rat I saw?"
+
