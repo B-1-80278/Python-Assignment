@@ -6,8 +6,8 @@ def student_data(*args, **kwargs):
     if len(args) != 0:
         print(args)
     else:
-        for parameter in kwargs:
-            print(kwargs[parameter])
+        for key in kwargs:
+            print(kwargs[key])
 
 
 student_data(80278)
