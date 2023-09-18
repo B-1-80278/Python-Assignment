@@ -19,9 +19,11 @@ class BankAccount:
         print(f"Updated balance is {new_balance}")
 
     def withdraw(self):
-        new_balance = self.balance - self.amount
-        print(f"Updated balance is {new_balance}")
-
+        if balance1 > amount1:
+            new_balance = self.balance - self.amount
+            print(f"Updated balance is {new_balance}")
+        else:
+            print("Insufficient balance")
 
 
 
