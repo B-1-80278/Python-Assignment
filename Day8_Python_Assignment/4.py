@@ -3,13 +3,28 @@
 # I/P-[1,2,5,6]
 # Output-[(1, 1), (2, 8), (5, 125), (6, 216)]
 
-list_of_numbers = [1, 2, 5, 6]
-
-def cube(*args):
-        args = args ** 3
-        print(args)
+list1 = [1, 2, 5, 6]
+print(list1)
 
 
-for i in list_of_numbers:
-    cube(i)
+def cube(p1):
+    return p1 ** 3
 
+
+list2 = []
+for i in list1:
+    a = cube(i)
+    list2.append(a)
+print(list2)
+
+list_of_tuple = []
+
+
+def merge(l1, l2):
+    for index in range(len(l1)):
+        b = (l1[index], l2[index])
+        list_of_tuple.append(b)
+    print(list_of_tuple)
+
+
+merge(list1, list2)

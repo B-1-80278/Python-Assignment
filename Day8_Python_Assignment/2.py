@@ -29,6 +29,7 @@ class Circle:
         print(f"Perimeter of circle is {perimeter}")
 
 
-c1 = Circle(0, 0, 7)
+radius = int(input("Enter radius of circle: "))
+c1 = Circle(0, 0, radius)
 c1.area_of_circle()
 c1.perimeter_of_circle()
