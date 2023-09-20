@@ -15,6 +15,7 @@ class Vehicle:
 
 
 
+#inheritating from vehicle class
 class Bus(Vehicle):
     pass
 
