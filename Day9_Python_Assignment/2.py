@@ -15,12 +15,14 @@ class Rectangle:
         self.__breadth = rundi
 
     def calculate_perimeter(self):
-        perimeter = 2*(self.__length + self.__length)
+        perimeter = 2 * (self.__length + self.__length)
         print(f"Perimeter of rectangle is {perimeter}")
 
     def calculate_area(self):
         area = self.__length * self.__breadth
         print(f"Area of rectangle is {area}")
+        return area
+
     def display_info(self):
         print(f"Length of rectangle is {self.__length}")
         print(f"Breadth of rectangle is {self.__breadth}")
@@ -28,7 +30,19 @@ class Rectangle:
         self.calculate_area()
 
 
+class Parallelepiped(Rectangle):
+    def __init__(self, lambi, rundi, height):
+        self.__height = height
+        Rectangle.__init__(self, lambi, rundi)
+
+    def volume(self):
+        volume = r1.calculate_area() * self.__height
+        print(f"Volume of parallelepiped is {volume}")
+
+
+r1 = Parallelepiped(10, 20, 30)
+r1.volume()
 r1 = Rectangle(10, 20)
 r1.display_info()
 
-
+# print(r1.__dict__)

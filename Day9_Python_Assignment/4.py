@@ -6,7 +6,7 @@
 # TSHIF
 # SHIFT
 
-string1 = "SHIFT"
+string1 = "SUMITVSHINDE"
 for i in range(len(string1)):
     print(string1[i:] + string1[:i])
 

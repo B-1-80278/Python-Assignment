@@ -8,3 +8,17 @@
 # Working with matplotlib, seaborn.
 # The function should display the output as 4
 
+
+with open("text.txt") as new_file:
+    count = 0
+    line_no =0
+
+    for line in new_file:
+        line = line.replace("\n", "")
+        if line[0] != 'C':
+            count += 1
+        line_no +=1
+        print("Line", line_no, line)
+
+
+print("Total lines without starting 'C':", count)
