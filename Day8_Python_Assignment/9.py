@@ -3,7 +3,7 @@
 
 num = int(input("Enter the length of numbers for which Fibonacci series needs to be produced: "))
 
-# first two terms(
+# first two terms
 n1 = 0
 n2 = 1
 count = 0
