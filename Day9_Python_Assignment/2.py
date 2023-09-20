@@ -30,3 +30,5 @@ class Rectangle:
 
 r1 = Rectangle(10, 20)
 r1.display_info()
+
+
