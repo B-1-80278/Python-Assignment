@@ -2,12 +2,7 @@
 # in a text file.
 
 with open("text.txt") as new_file:
-    count = 0
-
-
-    for line in new_file:
-        for c in line:
-            if c == ' ' or c == '\n':
-                count += 1
-
-print("Total number of words:", (count+1))
+    data = new_file.read()
+    words = data.split()     #The split() method splits a string into a list of individuL words.
+    
+print('Number of words in text file :', len(words))
