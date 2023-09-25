@@ -1,0 +1,56 @@
+def calender():
+    n=int(input("How many days are in month: "))
+    ch = int(input("what day of the week the month begins :\n"
+                   "0.Mon 1.Tue 2.Wed 3.Thur 4.Fri 5.Sat 6.Sun : "))
+    num=[]
+    week=["|S","M","T","W","T","F"," S|"]
+    print("")
+    for i in week :
+        print(f"{i:^5}",end=" ")
+    if ch==0:
+        for i in range(ch+2):
+            num.append(" ")
+        for i in range(1, n + 1):
+            num.append(i)
+    elif ch==1:
+        for i in range(ch+2):
+            num.append(" ")
+        for i in range(1, n + 1):
+            num.append(i)
+    elif ch==2:
+        for i in range(ch+2):
+            num.append(" ")
+        for i in range(1,n+1):
+            num.append(i)
+    elif ch==3:
+        for i in range(ch+2):
+            num.append(" ")
+        for i in range(1, n + 1):
+            num.append(i)
+    elif ch==4:
+        for i in range(ch+2):
+            num.append(" ")
+        for i in range(1, n + 1):
+            num.append(i)
+    elif ch==5:
+        for i in range(ch+2):
+            num.append(" ")
+        for i in range(1, n + 1):
+            num.append(i)
+    elif ch==6:
+        for i in range(ch+2):
+            num.append(" ")
+        for i in range(1, n + 1):
+            num.append(i)
+    else:
+        print("Invalid entry")
+    index=0
+    for i in num:
+        if index%7==0:
+            print(f"{i:^5}")
+            index+=1
+        else:
+            print(f"{i:^5}",end=" ")
+            index+=1
+
+calender()
