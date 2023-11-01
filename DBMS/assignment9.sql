@@ -23,15 +23,13 @@ select * from orders where odate = "1990-10-03";
 -- 2. If the Orders table has already been created, how can you force the onum field to be unique (assume all current values are unique)?
  
 CREATE UNIQUE INDEX idx_orders_onum ON orders(onum);
--- Because 3003 is already present
+
 INSERT INTO orders(onum) VALUES (3003);
 ERROR 1062 (23000): Duplicate entry '3003' for key 'orders.idx_orders_onum'
-
+-- This error coccurs because 3003 is already present
 
 -- 3. Create an index that would permit salesperson to retrieve his orders.
-EXPLAIN FORMAT = JSON
-SELECT * FROM orders;
-"query_cost": "1.25"
+
 
 CREATE INDEX idx_snum_orders ON orders(snum);
 
@@ -43,9 +41,6 @@ SELECT * FROM orders;
 -- 4. Let us assume that each salesperson is to have only one customer of a given rating, and that this is currently the case. Create an index that enforces it.
 
 CREATE UNIQUE INDEX idx_snum_cnum_rating ON customers(snum,cnum,rating);
-
-
-
 
 
 -- 5. Create an index to speed up searching order on a given date by given customer.
