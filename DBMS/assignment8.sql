@@ -208,9 +208,37 @@ WHERE amt > ANY(SELECT amt FROM orders
 
 -- 13. Find all orders with amounts smaller than any amount for a customer in San Jose.
 
-SELECT * 
-FROM orders
-WHERE amt < ANY(SELECT amt FROM orders 
-		WHERE snum IN (SELECT snum FROM customers
-		WHERE city = 'San Jose'));
-14. Select those customers whose rating are higher than every customer in Paris.
+SELECT * FROM orders WHERE amt < ANY(SELECT amt FROM orders WHERE cnum IN (SELECT cnum FROM customers WHERE city = 'San Jose'));
+
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-04 | 2006 | 1001 |
+| 3010 |  309.95 | 1990-10-04 | 2004 | 1002 |
++------+---------+------------+------+------+
+8 rows in set (0.00 sec)
+
+-- 14. Select those customers whose rating are higher than every customer in Paris.
+SELECT * FROM customers 
+WHERE rating > ALL(SELECT rating FROM customers
+		   WHERE city = 'Paris');
+		   
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
++------+----------+----------+--------+------+
+7 rows in set (0.00 sec)
+
