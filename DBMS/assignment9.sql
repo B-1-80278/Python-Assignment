@@ -22,7 +22,7 @@ select * from orders where odate = "1990-10-03";
 
 -- 2. If the Orders table has already been created, how can you force the onum field to be unique (assume all current values are unique)?
  
-CREATE UNIQUE INDEX idx_orders_onum ON orders(onum);
+CREATE UNIQUE INDEX idx_onum_orders ON orders(onum);
 
 INSERT INTO orders(onum) VALUES (3003);
 ERROR 1062 (23000): Duplicate entry '3003' for key 'orders.idx_orders_onum'
