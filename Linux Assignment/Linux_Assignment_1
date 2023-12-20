@@ -1,0 +1,230 @@
+
+## 1. List the directory contents date wise sorted. ( man ls)
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ ls -lt
+total 20
+-rw-rw-r-- 1 sumit sumit 11 Dec 20 15:12 file4
+-rw-rw-r-- 1 sumit sumit 49 Dec 20 15:08 New_File
+-rw-rw-r-- 1 sumit sumit 34 Dec 20 15:03 file2
+-rw-rw-r-- 1 sumit sumit 17 Dec 20 14:59 file3
+-rw-rw-r-- 1 sumit sumit  6 Dec 20 14:54 file1
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ ls -ltr
+total 20
+-rw-rw-r-- 1 sumit sumit  6 Dec 20 14:54 file1
+-rw-rw-r-- 1 sumit sumit 17 Dec 20 14:59 file3
+-rw-rw-r-- 1 sumit sumit 34 Dec 20 15:03 file2
+-rw-rw-r-- 1 sumit sumit 49 Dec 20 15:08 New_File
+-rw-rw-r-- 1 sumit sumit 11 Dec 20 15:12 file4
+
+2. List the directory contents size wise sorted.(man ls)
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ ls -lS
+total 20
+-rw-rw-r-- 1 sumit sumit 49 Dec 20 15:08 New_File
+-rw-rw-r-- 1 sumit sumit 34 Dec 20 15:03 file2
+-rw-rw-r-- 1 sumit sumit 17 Dec 20 14:59 file3
+-rw-rw-r-- 1 sumit sumit 11 Dec 20 15:12 file4
+-rw-rw-r-- 1 sumit sumit  6 Dec 20 14:54 file1
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ ls -lSr
+total 20
+-rw-rw-r-- 1 sumit sumit  6 Dec 20 14:54 file1
+-rw-rw-r-- 1 sumit sumit 11 Dec 20 15:12 file4
+-rw-rw-r-- 1 sumit sumit 17 Dec 20 14:59 file3
+-rw-rw-r-- 1 sumit sumit 34 Dec 20 15:03 file2
+-rw-rw-r-- 1 sumit sumit 49 Dec 20 15:08 New_File
+
+
+
+
+3. List directory contents along with their inode no. (man
+ls)
+
+In Linux, an inode (index node) is a data structure that stores metadata about a file. Each file in a Unix-like file system is identified by an inode number. 
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ ls -i
+2625616 file1  2625516 file2  2623817 file3  2625696 file4  2622817 New_File
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ ls -li
+total 20
+2625616 -rw-rw-r-- 1 sumit sumit  6 Dec 20 14:54 file1
+2625516 -rw-rw-r-- 1 sumit sumit 34 Dec 20 15:03 file2
+2623817 -rw-rw-r-- 1 sumit sumit 17 Dec 20 14:59 file3
+2625696 -rw-rw-r-- 1 sumit sumit 11 Dec 20 15:12 file4
+2622817 -rw-rw-r-- 1 sumit sumit 49 Dec 20 15:08 New_File
+
+
+
+4. List the contents of the subdirectory.
+
+sumit@sumit-pc:~/Desktop/Linux$ ls Assignment_2
+file1  file2  file3  file4  New_File
+sumit@sumit-pc:~/Desktop/Linux$ ls -l Assignment_2/
+total 20
+-rw-rw-r-- 1 sumit sumit  6 Dec 20 14:54 file1
+-rw-rw-r-- 1 sumit sumit 34 Dec 20 15:03 file2
+-rw-rw-r-- 1 sumit sumit 17 Dec 20 14:59 file3
+-rw-rw-r-- 1 sumit sumit 11 Dec 20 15:12 file4
+-rw-rw-r-- 1 sumit sumit 49 Dec 20 15:08 New_File
+sumit@sumit-pc:~/Desktop/Linux$ 
+
+
+5. Create a file, write your surname and name in it and
+save.
+i. now open the same file and add your address in it and
+save.
+ii. reopen the same file and check your name and address in
+it.
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ touch New_File 
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ echo Sumit Shinde > New_File 
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ cat New_File 
+Sumit Shinde
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ echo Address: Virat Hanuman Nagar, Latur >>New_File 
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ cat New_File 
+Sumit Shinde
+Address: Virat Hanuman Nagar, Latur
+
+
+6. how to change the time stamp of file (man touch)
+
+sumit@sumit-pc:~/Desktop/Linux$ touch -d "2023-1-1 12:00:00" Assignment_2
+sumit@sumit-pc:~/Desktop/Linux$ stat Assignment_2/
+  File: Assignment_2/
+  Size: 4096      	Blocks: 8          IO Block: 4096   directory
+Device: 10307h/66311d	Inode: 2646037     Links: 2
+Access: (0775/drwxrwxr-x)  Uid: ( 1000/   sumit)   Gid: ( 1000/   sumit)
+Access: 2023-01-01 12:00:00.000000000 +0530
+Modify: 2023-01-01 12:00:00.000000000 +0530
+Change: 2023-12-20 15:43:59.498103561 +0530
+ Birth: 2023-12-20 14:36:03.984893216 +0530
+
+
+7. Create directory structure : Give following commands ,
+-> mkdir one
+-> cd one
+-> touch 1.txt 11.txt 111.txt
+-> mkdir two
+-> cd two
+-> touch 2.txt 22.txt 222.txt
+-> mkdir three
+-> cd three
+-> touch 3.txt 33.txt 333.txt
+-> mkdir four
+-> cd four
+-> touch 4.txt 44.txt 444.txt
+-> mkdir five
+-> cd five
+-> touch 5.txt 55.txt 555.txt
+-> cd ~ (i.e. go to your home directory)
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ mkdir one
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2$ cd one
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one$ touch 1.txt 11.txt 111.txt
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one$ mkdir two
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one$ cd two/
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two$ touch 2.txt 22.txt 222.txt
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two$ mkdir three
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two$ cd three
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three$ touch 3.txt 33.txt 333.txt
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three$ mkdir four
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three$ cd four
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four$ touch 4.txt 44.txt 444.txt
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four$ mkdir five
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four$ cd five
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four/five$ touch 5.txt55.txt 555.txt
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four/five$ cd
+
+
+8. Considering above directory structure , Do following
+operations :
+i. list the directory contents of directory named
+"five" from current directory (i.e. home directory).
+sumit@sumit-pc:~$ ls -l Desktop/Linux/Assignment_2/one/two/three/four/five
+total 0
+-rw-rw-r-- 1 sumit sumit 0 Dec 20 15:54 555.txt
+-rw-rw-r-- 1 sumit sumit 0 Dec 20 16:52 55.txt
+-rw-rw-r-- 1 sumit sumit 0 Dec 20 15:54 5.txt
+
+ii. write your name in a file named "44.txt" of
+directory "four" from current directory.
+sumit@sumit-pc:~$ echo Sumit > Desktop/Linux/Assignment_2/one/two/three/four/44.txt
+
+iii. remove the file named "555.txt" from directory
+"five" from current directory.
+sumit@sumit-pc:~$ rm Desktop/Linux/Assignment_2/one/two/three/four/five/555.txt 
+
+
+iv. change directory to five ( i.e. cd
+one/two/three/four/five/ ).
+sumit@sumit-pc:~$ cd ~/Desktop//Linux/Assignment_2/one/two/three/four/five
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four/five$ 
+
+
+v. write your course name in file named "3.txt" which
+resides in directory "three" from current directory (i.e.
+five). also read the same file.
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four/five$ echo DBDA > ../../3.txt
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four/five$ cat ../../3.txt 
+DBDA
+
+
+
+vi. list the contents of directory "two" from current
+directory (i.e. five).
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four/five$ ls ../../..
+222.txt  22.txt  2.txt  three
+
+
+
+vii. remove file named "222.txt" which belongs to
+directory "two" from current directory (i.e. five)
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four/five$ rm ../../../222.txt 
+
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four/five$ ls ../../..
+22.txt  2.txt  three
+
+
+viii. now change the directory to "one"
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one/two/three/four/five$ cd ../../../../
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one$ 
+
+
+
+ix. remove all files only from directory named "five"
+from current directory (i.e. one)
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one$ rm two/three/four/five/*
+
+
+
+x. remove directory named "five" from current directory
+(i.e. one)
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one$ rmdir two/three/four/five
+
+xi. remove whole directory named "four" from current
+directory (i.e. one)
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one$ rm -r two/three/four
+
+
+xii. change to your home directory.
+sumit@sumit-pc:~/Desktop/Linux/Assignment_2/one$ cd
+sumit@sumit-pc:~$ 
+
+
+9. change the time stamp of file named "3.txt" which resides
+in directory named "three".(man touch)
+
+sumit@sumit-pc:~$ touch -d "2015-01-01 12:00:00" Desktop/Linux/Assignment_2/one/two/three/3.txt 
+sumit@sumit-pc:~$ stat Desktop/Linux/Assignment_2/one/two/three/3.txt 
+  File: Desktop/Linux/Assignment_2/one/two/three/3.txt
+  Size: 5         	Blocks: 8          IO Block: 4096   regular file
+Device: 10307h/66311d	Inode: 2625192     Links: 1
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/   sumit)   Gid: ( 1000/   sumit)
+Access: 2015-01-01 12:00:00.000000000 +0530
+Modify: 2015-01-01 12:00:00.000000000 +0530
+Change: 2023-12-20 17:30:13.494099273 +0530
+ Birth: 2023-12-20 15:53:56.318026059 +0530
+
