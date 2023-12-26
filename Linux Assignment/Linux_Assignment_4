@@ -1,0 +1,61 @@
+i. count the no. of words ,characters and lines from above 2 file.(man wc) 
+sumit@sumit-pc:~/Desktop/DBDA/Python-Assignment/Linux Assignment/Linux Assignment 4$ wc data.txt 
+  7  25 150 data.txt
+
+
+ii. list the lines having word "files" (man grep) 
+sumit@sumit-pc:~/Desktop/DBDA/Python-Assignment/Linux Assignment/Linux Assignment 4$ grep "files" data.txt 
+files have permissions. 
+files have inode no. 
+files have size. 
+there are several types of files
+
+iii. list the lines having word "file" (man grep) 
+sumit@sumit-pc:~/Desktop/DBDA/Python-Assignment/Linux Assignment/Linux Assignment 4$ grep -w "file" data.txt 
+In Linux everything is file
+
+
+iv. list the lines which don't have word "files" (man grep) 
+sumit@sumit-pc:~/Desktop/DBDA/Python-Assignment/Linux Assignment/Linux Assignment 4$ grep -v "files" data.txt 
+Linux is open source. 
+In Linux everything is file
+
+v. list the lines having word "have" . (man grep) 
+sumit@sumit-pc:~/Desktop/DBDA/Python-Assignment/Linux Assignment/Linux Assignment 4$ grep "have" data.txt 
+files have permissions. 
+files have inode no. 
+files have size. 
+
+vi. list the lines starts with letter "f" (man grep) 
+sumit@sumit-pc:~/Desktop/DBDA/Python-Assignment/Linux Assignment/Linux Assignment 4$ grep "^f" data.txt 
+files have permissions. 
+files have inode no. 
+files have size. 
+
+vii. list the lines ends with "." (man grep) 
+sumit@sumit-pc:~/Desktop/DBDA/Python-Assignment/Linux Assignment/Linux Assignment 4$ grep \.$ data.txt 
+Linux is open source. 
+In Linux everything is file
+files have permissions. 
+files have inode no. 
+files have size. 
+there are several types of files
+
+
+viii. list only first two lines.(man head) 
+sumit@sumit-pc:~/Desktop/DBDA/Python-Assignment/Linux Assignment/Linux Assignment 4$ head -n 2 data.txt 
+Linux is open source. 
+In Linux everything is file
+
+ix. list only last three lines.(man tail) 
+sumit@sumit-pc:~/Desktop/DBDA/Python-Assignment/Linux Assignment/Linux Assignment 4$ tail -n 3 data.txt 
+files have inode no. 
+files have size. 
+there are several types of files
+
+x. list line no.3,4 and 5 . (man head and tail)
+head -n 5 data.txt | tail -n 3
+files have permissions. 
+files have inode no. 
+files have size. 
+
