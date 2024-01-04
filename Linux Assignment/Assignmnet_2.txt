@@ -1,0 +1,212 @@
+Linux Commands Assignments - II
+
+1. List the directory contents date wise sorted. ( man ls)
+
+$ ls -lt
+total 126404
+drwxrwxr-x 2 sad7_5407 sad7_5407     4096 Dec 19 18:08  terminal-colors
+-rw-rw-r-- 1 sad7_5407 sad7_5407     3919 Dec 19 18:02  Linux_terminal_color.zip
+drwxrwxr-x 2 sad7_5407 sad7_5407     4096 Dec 14 23:56 'Telegram Desktop'
+-rw-rw-r-- 1 sad7_5407 sad7_5407    90006 Dec 12 15:29 '230944225006 (2).pdf'
+-rw-rw-r-- 1 sad7_5407 sad7_5407    89942 Dec 12 15:14 'CDAC Resume.pdf.pdf'
+-rw-rw-r-- 1 sad7_5407 sad7_5407    89942 Dec 12 15:14 '230944225006 (1).pdf'
+-rw-rw-r-- 1 sad7_5407 sad7_5407    89818 Dec 12 15:09 'CDAC Resume.pdf'
+-rw-rw-r-- 1 sad7_5407 sad7_5407    89818 Dec 12 15:07  230944225006.pdf
+-rw-rw-r-- 1 sad7_5407 sad7_5407    57788 Dec 12 14:29 'Id photo.jpeg'
+-rw-rw-r-- 1 sad7_5407 sad7_5407   578642 Dec  3 14:02  wallpaperflare.com_wallpaper.jpg
+drwxrwxr-x 3 sad7_5407 sad7_5407     4096 Nov 30 15:03  spring-tool-suite-3.9.18.RELEASE-e4.21.0-linux-gtk-x86_64
+...
+
+
+
+
+2. List the directory contents size wise sorted.(man ls)
+$ ls -lhs --sort=size
+total 124M
+ 33M -rw-rw-r-- 1 sad7_5407 sad7_5407  33M Nov 17 18:46  knn.pkl
+ 23M -rw-rw-r-- 1 sad7_5407 sad7_5407  23M Oct 14 20:58 'Online Retail.xlsx'
+ 13M -rw-rw-r-- 1 sad7_5407 sad7_5407  13M Mar 19  2020  Invistico_Airline.csv
+9.8M -rw-rw-r-- 1 sad7_5407 sad7_5407 9.8M Oct 16 13:47  cropped-5120-2880-885518.jpg
+8.1M -rw-rw-r-- 1 sad7_5407 sad7_5407 8.1M Oct 22  2020 'fifa21 raw data v2.csv'
+6.9M -rw-rw-r-- 1 sad7_5407 sad7_5407 6.9M Oct 16 13:49  cropped-5120-2880-885519.jpg
+5.5M -rw-rw-r-- 1 sad7_5407 sad7_5407 5.5M Nov  6 22:51  INNHotelsGroup.csv
+4.5M -rw-rw-r-- 1 sad7_5407 sad7_5407 4.5M Nov  8 23:42  INNHotelsGroup53k.csv
+4.2M -rw-rw-r-- 1 sad7_5407 sad7_5407 4.2M Aug  1  2022  powerconsumption.csv
+..   
+
+
+
+3. List directory contents along with their inode no. (man
+ls)
+$ ls -i
+562861 '230944225006 (1).pdf'                              554658  knn.pkl
+564221 '230944225006 (2).pdf'                              596595  Linux_terminal_color.zip
+545593  230944225006.pdf                                   691330 'MongoDB Cheat Sheet _ MongoDB_files'
+531533 'Brave Passwords.csv'                               622171 'MongoDB Cheat Sheet _ MongoDB.html'
+691210  catboost_info              
+...
+
+
+
+4. List the contents of the subdirectory.
+$ ls Documents/
+ 50_Startups.csv                                                                   hybrid_inheritance.png        python_code_reusability.png
+'Advanced Analytics Token'                                                         inheritance_memory_view.png   python_execution_process.png
+'assignment github token'                                                          k_means_clustering_ex1.ods    python_introduction.pdf
+ association.png                                                                   k_means_clustering_ex2.ods   'python moments code'
+ chrome-driver-selenium-installation.odt                                           Machine_learning_token       'Python Notes'
+ compiled_vs_intepreted.png                                                        multilevel_inheritance.png   'Python Notes (SAD7_5407).ipynb'
+ correlation_template.ods                                                          multiple_inheritance.png      python.pdf
+ data.csv                                                                         'New Github Token Python R'    Salary_Data.csv
+ Demo1-1-1.txt                                                                     numpy.pdf                     Salary_Data_stats.ods
+ descriptive_stats.ods                                                             oops1.png                     sample
+'engg marks.ods'                                                                   pandas.pdf                    single_inheritance.png
+'Hands–On Machine Learning with Scikit–Learn and TensorFlow 2e ( PDFDrive ).pdf'   PRN                           SUNBEAM_MAC_Address
+ hierarchical_inheritance.png   
+
+
+
+5. Create a file, write your surname and name in it and
+save.
+
+$ cat > myfile.txt
+Shinde
+
+i. now open the same file and add your address in it and
+save.
+ $ cat >> myfile.txt 
+T3 TCG, Near Infosys, Phase 2, Hinjewadi, Pune.
+
+
+ii. reopen the same file and check your name and address in
+it.
+$ cat myfile.txt 
+Shinde
+T3 TCG, Near Infosys, Phase 2, Hinjewadi, Pune.
+
+
+6. how to change the time stamp of file (man touch)
+$ touch -a -m -t 202301130105.09 myfile.txt
+sad7_5407@MAYDAYx3 /tmp $ stat myfile.txt 
+  File: myfile.txt
+  Size: 55        	Blocks: 8          IO Block: 4096   regular file
+Device: 10308h/66312d	Inode: 5506212     Links: 1
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/sad7_5407)   Gid: ( 1000/sad7_5407)
+Access: 2023-01-13 01:05:09.000000000 +0530
+Modify: 2023-01-13 01:05:09.000000000 +0530
+Change: 2023-12-20 15:40:44.417467930 +0530
+ Birth: 2023-12-20 15:27:38.837748139 +0530
+
+
+7. Create directory structure : Give following commands ,
+-> mkdir one
+-> cd one
+-> touch 1.txt 11.txt 111.txt
+-> mkdir two
+-> cd two
+-> touch 2.txt 22.txt 222.txt
+-> mkdir three
+-> cd three
+-> touch 3.txt 33.txt 333.txt
+-> mkdir four
+-> cd four
+-> touch 4.txt 44.txt 444.txt
+-> mkdir five
+-> cd five
+-> touch 5.txt 55.txt 555.txt
+-> cd ~ (i.e. go to your home directory)
+
+
+
+8. Considering above directory structure , Do following
+operations :
+i. list the directory contents of directory named
+"five" from current directory (i.e. home directory).
+
+$ ls /tmp/five/
+555.txt  55.txt  5.txt
+
+
+ii. write your name in a file named "44.txt" of
+directory "four" from current directory.
+
+$ cat > /tmp/four/44
+Anand Shinde
+sad7_5407@MAYDAYx3 ~ $ cat /tmp/four/44
+Anand Shinde
+
+
+
+iii. remove the file named "555.txt" from directory
+"five" from current directory.
+
+sad7_5407@MAYDAYx3 ~ $ rm /tmp/five/555
+sad7_5407@MAYDAYx3 ~ $ ls /tmp/five
+5  55
+
+
+iv. change directory to five
+one/two/three/four/five/ ).
+sad7_5407@MAYDAYx3 ~ $ cd /tmp/five/
+
+
+
+v. write your course name in file named "3.txt" which
+resides in directory "three" from current directory (i.e.
+five).also read the same file.
+
+$ cat > ../three/3
+DBDA
+
+sad7_5407@MAYDAYx3 /tmp/five $ cat ../three/3
+DBDA
+
+vi. list the contents of directory "two" from current
+directory (i.e. five).
+sad7_5407@MAYDAYx3 /tmp/five $ ls ../two
+2  22  222
+
+
+vii. remove file named "222.txt" which belongs to
+directory "two" from current directory (i.e. five)
+sad7_5407@MAYDAYx3 /tmp/five $ rm ../two/222
+sad7_5407@MAYDAYx3 /tmp/five $ ls ../two
+2  22
+
+
+
+viii. now change the directory to "one"
+sad7_5407@MAYDAYx3 /tmp/five $ cd ../one
+
+
+
+ix. remove all files only from directory named "five"
+from current directory (i.e. one)
+sad7_5407@MAYDAYx3 /tmp/one $ rm -r ../five/
+
+
+
+x. remove directory named "five" from current directory
+(i.e. one)
+sad7_5407@MAYDAYx3 /tmp/one $ rm -r ../five
+
+xi. remove whole directory named "four" from current
+directory (i.e. one)
+sad7_5407@MAYDAYx3 /tmp/one $ rm -r ../four
+
+xii. change to your home directory.
+sad7_5407@MAYDAYx3 /tmp/one $ cd ~
+
+9. change the time stamp of file named "3.txt" which resides
+in directory named "three".(man touch)
+sad7_5407@MAYDAYx3 ~ $ touch -a -m -t 202301130105.09 /tmp/three/3
+sad7_5407@MAYDAYx3 ~ $ stat /tmp/three/3
+  File: /tmp/three/3
+  Size: 4         	Blocks: 8          IO Block: 4096   regular file
+Device: 10308h/66312d	Inode: 5506626     Links: 1
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/sad7_5407)   Gid: ( 1000/sad7_5407)
+Access: 2023-01-13 01:05:09.000000000 +0530
+Modify: 2023-01-13 01:05:09.000000000 +0530
+Change: 2023-12-20 16:04:16.381035591 +0530
+ Birth: 2023-12-20 15:49:44.958510429 +0530
+

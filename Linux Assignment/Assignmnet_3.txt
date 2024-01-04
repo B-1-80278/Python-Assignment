@@ -1,0 +1,318 @@
+1. ls : display hidden files
+
+ /tmp $ ls -a
+.
+..
+.com.google.Chrome.7p8mf2
+.font-unix
+gdm3-config-err-JtiEHp
+hsperfdata_cassandra
+hsperfdata_sad7_5407
+.ICE-unix
+liblz4-java-4961186799264165490.so
+liblz4-java-4961186799264165490.so.lck
+mongodb-27017.sock
+snap-private-tmp
+systemd-private-9e5bd13e0086428c83e490ee9c577051-bluetooth.service-kXcQb1
+systemd-private-9e5bd13e0086428c83e490ee9c577051-bolt.service-UNPquG
+systemd-private-9e5bd13e0086428c83e490ee9c577051-colord.service-2jcO59
+systemd-private-9e5bd13e0086428c83e490ee9c577051-fwupd.service-XMqb3q
+systemd-private-9e5bd13e0086428c83e490ee9c577051-ModemManager.service-otjTxD
+systemd-private-9e5bd13e0086428c83e490ee9c577051-power-profiles-daemon.service-VnLaeK
+systemd-private-9e5bd13e0086428c83e490ee9c577051-redis-server.service-piTPo5
+systemd-private-9e5bd13e0086428c83e490ee9c577051-switcheroo-control.service-OtVJL5
+systemd-private-9e5bd13e0086428c83e490ee9c577051-systemd-logind.service-X2AQVU
+systemd-private-9e5bd13e0086428c83e490ee9c577051-systemd-oomd.service-q4RU0I
+systemd-private-9e5bd13e0086428c83e490ee9c577051-systemd-resolved.service-OJuGbQ
+systemd-private-9e5bd13e0086428c83e490ee9c577051-systemd-timesyncd.service-JSINes
+systemd-private-9e5bd13e0086428c83e490ee9c577051-upower.service-LAFlVl
+.Test-unix
+.X11-unix
+.XIM-unix
+
+
+2. rename : Rename all *.txt files to *.html
+
+sad7_5407@MAYDAYx3 /tmp $ rename 's/\.txt$/\.html/' *.txt
+sad7_5407@MAYDAYx3 /tmp $ ls
+a.html
+b.html
+DT.html
+gdm3-config-err-rsJ4YY
+hsperfdata_cassandra
+liblz4-java-14468568297663020801.so
+liblz4-java-14468568297663020801.so.lck
+mongodb-27017.sock
+snap-private-tmp
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-bluetooth.service-YsTnLH
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-bolt.service-PISggn
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-colord.service-YZjSCW
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-fwupd.service-1eWG7T
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-ModemManager.service-70PbpI
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-power-profiles-daemon.service-RfA3dK
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-redis-server.service-fBA0R3
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-switcheroo-control.service-kBRyhm
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-systemd-logind.service-NYcz3w
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-systemd-oomd.service-JMZ5sQ
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-systemd-resolved.service-CCB8S5
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-systemd-timesyncd.service-D7XsUl
+systemd-private-814976689e1a495b9e8ab30ab7c4b82f-upower.service-5Wkh0j
+t1
+
+
+
+
+3.ln -s Create symbolic link (shortcut) for a file
+
+sad7_5407@MAYDAYx3 /tmp $ ln -s a11.txt a11_shortcut
+
+
+
+4.ln : Create hard link for a file
+sad7_5407@MAYDAYx3 /tmp $ ln a2.txt a2_shortcut
+
+
+5.stat : Display time stamp of the file
+
+sad7_5407@MAYDAYx3 /tmp $ stat a11.txt 
+  File: a11.txt
+  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
+Device: 10308h/66312d	Inode: 5505075     Links: 1
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/sad7_5407)   Gid: ( 1000/sad7_5407)
+Access: 2023-12-21 14:24:40.309690484 +0530
+Modify: 2023-12-21 14:13:18.012383178 +0530
+Change: 2023-12-21 14:17:34.978377103 +0530
+ Birth: 2023-12-21 14:13:18.012383178 +0530
+
+
+
+6.touch : Change the time stamp of the file
+
+sad7_5407@MAYDAYx3 /tmp $ touch -d"12 Dec 2023" a2.txt
+sad7_5407@MAYDAYx3 /tmp $ stat a2.txt 
+  File: a2.txt
+  Size: 25        	Blocks: 8          IO Block: 4096   regular file
+Device: 10308h/66312d	Inode: 5505080     Links: 2
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/sad7_5407)   Gid: ( 1000/sad7_5407)
+Access: 2023-12-12 00:00:00.000000000 +0530
+Modify: 2023-12-12 00:00:00.000000000 +0530
+Change: 2023-12-21 14:39:45.066930831 +0530
+ Birth: 2023-12-21 14:13:18.012383178 +0530
+
+
+
+7.touch : Create empty file
+
+sad7_5407@MAYDAYx3 /tmp $ touch empty1.txt
+
+
+
+8.tail: Print all lines in a file from fifth line onwards
+
+sad7_5407@MAYDAYx3 /tmp :( $ tail -n +5 a3.txt 
+5
+6
+7
+8
+9
+10
+11
+12
+12
+14
+15
+16
+17
+18
+19
+20
+
+
+
+9.init 0, poweroffShutdown (Only for super-user)
+
+
+
+
+10.init 6, rebootReboot (Only for super-user)
+
+
+
+12.whoamiFind current user
+sad7_5407@MAYDAYx3 ~ $ whoami
+sad7_5407
+
+
+13.ttyFind current terminal
+sad7_5407@MAYDAYx3 ~ $ tty
+/dev/pts/0
+
+
+
+14.who am i Find current user and terminal
+-- 
+
+15.usersFind all users logged into the system
+sad7_5407@MAYDAYx3 ~ $ users
+sad7_5407
+
+
+
+16.whoFind all users logged in and terminals in use
+
+sad7_5407@MAYDAYx3 ~ $ who
+sad7_5407 :1           2023-12-21 14:49 (:1)
+
+
+17.grep, egrep, fgrepFind a given word/pattern from the file
+
+sad7_5407@MAYDAYx3 ~ $ grep sad7_5407 /etc/passwd
+sad7_5407:x:1000:1000:SAD7_5407,,,:/home/sad7_5407:/bin/bash
+
+sad7_5407@MAYDAYx3 ~ $ egrep sad7_5407 /etc/passwd
+sad7_5407:x:1000:1000:SAD7_5407,,,:/home/sad7_5407:/bin/bash
+
+sad7_5407@MAYDAYx3 ~ $ fgrep sad7_5407 /etc/passwd
+sad7_5407:x:1000:1000:SAD7_5407,,,:/home/sad7_5407:/bin/bash
+
+
+
+18.chmodMake a file as read-only
+
+sad7_5407@MAYDAYx3 /tmp $ ls -l t1
+-rw-rw-r-- 1 sad7_5407 sad7_5407 0 Dec 21 14:54 t1
+sad7_5407@MAYDAYx3 /tmp $ chmod -wx t1
+sad7_5407@MAYDAYx3 /tmp $ ls -l t1
+-r--r--r-- 1 sad7_5407 sad7_5407 0 Dec 21 14:54 t1
+
+
+
+19.chmodMake a file as write, read and execute
+
+sad7_5407@MAYDAYx3 /tmp $ chmod 777 t1
+sad7_5407@MAYDAYx3 /tmp $ ls -l t1
+-rwxrwxrwx 1 sad7_5407 sad7_5407 0 Dec 21 14:54 t1
+
+
+20.wc (using redirection)Take input from the file, count words and store output to other file
+
+sad7_5407@MAYDAYx3 /tmp $ wc /etc/passwd | cat >> t1
+sad7_5407@MAYDAYx3 /tmp $ cat t1
+  62  113 3805 /etc/passwd
+
+
+
+21.who | wc (using pipe)Count words in output of “who” command
+
+sad7_5407@MAYDAYx3 /tmp $ who | wc
+      1       5      45
+
+
+22.head, tail (using pipe)Print lines 5 to 10 from the given file
+
+sad7_5407@MAYDAYx3 /tmp $ head t1 | tail -n 5 
+6
+7
+8
+9
+10
+
+
+
+23.sort , uniq (using pipe)Print the uniq values from the unsorted file
+
+sad7_5407@MAYDAYx3 /tmp $ sort -g t1 | uniq
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+34
+312
+
+
+24.who, grep (using pipe)Display all users not using tty2, tty3, tty4
+
+sad7_5407@MAYDAYx3 /tmp $ who | grep -v 'tty2\|tty3\|tty4'
+sad7_5407 :1           2023-12-21 14:49 (:1)
+
+
+
+25.ls : Display all files in ascending order of their file size
+
+sad7_5407@MAYDAYx3 /tmp $ ls --sort=size -rhs
+total 216K
+   0 mongodb-27017.sock
+   0 liblz4-java-14468568297663020801.so.lck
+   0 gdm3-config-err-rsJ4YY
+4.0K t1
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-upower.service-5Wkh0j
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-systemd-timesyncd.service-D7XsUl
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-systemd-resolved.service-CCB8S5
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-systemd-oomd.service-JMZ5sQ
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-systemd-logind.service-NYcz3w
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-switcheroo-control.service-kBRyhm
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-redis-server.service-fBA0R3
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-power-profiles-daemon.service-RfA3dK
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-ModemManager.service-70PbpI
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-fwupd.service-1eWG7T
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-colord.service-YZjSCW
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-bolt.service-PISggn
+4.0K systemd-private-814976689e1a495b9e8ab30ab7c4b82f-bluetooth.service-YsTnLH
+4.0K snap-private-tmp
+4.0K hsperfdata_cassandra
+152K liblz4-java-14468568297663020801.so
+
+
+26.ls, grep (using pipe)Count number of files and directories from current directory
+
+sad7_5407@MAYDAYx3 /tmp :( $ ls | wc
+     20      20    1156
+
+
+
+27.ls, grep (using pipe)Display only hidden files in a directory
+
+sad7_5407@MAYDAYx3 /tmp $ ls -ld .?*
+drwxr-xr-x 20 root      root      4096 Sep 10 14:52 ..
+drwx------  2 sad7_5407 sad7_5407 4096 Dec 21 15:21 .com.google.Chrome.nTaq8N
+drwxrwxrwt  2 root      root      4096 Dec 21 14:48 .font-unix
+drwxrwxrwt  2 root      root      4096 Dec 21 14:49 .ICE-unix
+drwxrwxrwt  2 root      root      4096 Dec 21 14:48 .Test-unix
+drwxrwxrwt  2 root      root      4096 Dec 21 14:49 .X11-unix
+drwxrwxrwt  2 root      root      4096 Dec 21 14:48 .XIM-unix
+
+
+
+28.tr : Convert file contents into uppercase , also learn "-s" option of this command
+
+sad7_5407@MAYDAYx3 /tmp :( $ tr a-z A-Z < t1
+ASDFG
+DFSG
+BVCX
+GFDS
+
+
+29.cut Split the file contents using delimiter and print required fields
+
+sad7_5407@MAYDAYx3 /tmp $ cat t1
+asdfg
+dfsg
+bvcx
+gfds
+
+sad7_5407@MAYDAYx3 /tmp $ cut -d "f" -f 1 t1
+asd
+d
+bvcx
+g
+
