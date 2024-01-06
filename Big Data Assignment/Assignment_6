@@ -1,0 +1,496 @@
+Q1}
+
+CREATE TABLE fire_staging (
+    Call_Number BIGINT,
+    Unit_ID STRING,
+    Incident_Number BIGINT,
+    Call_Type STRING,
+    Call_Date STRING,
+    Watch_Date STRING,
+    Received_DtTm STRING,
+    Entry_DtTm STRING,
+    Dispatch_DtTm STRING,
+    Response_DtTm STRING,
+    On_Scene_DtTm STRING,
+    Transport_DtTm STRING,
+    Hospital_DtTm STRING,
+    Call_Final_Disposition STRING,
+    Available_DtTm STRING,
+    Address STRING,
+    City STRING,
+    Zipcode INT,
+    Battalion STRING,
+    Station_Area SMALLINT,
+    Box INT,
+    Original_Priority SMALLINT,
+    Priority SMALLINT,
+    Final_Priority SMALLINT,
+    ALS_Unit STRING,
+    Call_Type_Group STRING,
+    Number_of_Alarms SMALLINT,
+    Unit_Type STRING,
+    Unit_sequence_in_call_dispatch SMALLINT,
+    Fire_Prevention_District SMALLINT,
+    Supervisor_District SMALLINT,
+    Neighborhoods_Analysis_Boundaries STRING,
+    RowID STRING,
+    case_location STRING,
+    data_as_of STRING,
+    data_loaded_at STRING,
+    Analysis_Neighborhoods SMALLINT
+) ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+TBLPROPERTIES('skip.header.line.count'='1');
+
+LOAD DATA LOCAL INPATH '/home/oem/Sunbeam/BigData/data/Fire_Department_Calls_for_Service.csv' INTO TABLE fire_staging;
+
+CREATE TABLE fire_data( Call_Number BIGINT,
+    Unit_ID STRING,
+    Incident_Number BIGINT,
+    Call_Type STRING,
+    Call_Date DATE,
+    Watch_Date DATE,
+    Received_DtTm TIMESTAMP,
+    Entry_DtTm TIMESTAMP,
+    Dispatch_DtTm TIMESTAMP,
+    Response_DtTm TIMESTAMP,
+    On_Scene_DtTm TIMESTAMP,
+    Transport_DtTm TIMESTAMP,
+    Hospital_DtTm TIMESTAMP,
+    Call_Final_Disposition STRING,
+    Available_DtTm TIMESTAMP,
+    Address STRING,
+    City STRING,
+    Zipcode INT,
+    Battalion STRING,
+    Station_Area SMALLINT,
+    Box INT,
+    Original_Priority SMALLINT,
+    Priority SMALLINT,
+    Final_Priority SMALLINT,
+    ALS_Unit STRING,
+    Call_Type_Group STRING,
+    Number_of_Alarms SMALLINT,
+    Unit_Type STRING,
+    Unit_sequence_in_call_dispatch SMALLINT,
+    Fire_Prevention_District SMALLINT,
+    Supervisor_District SMALLINT,
+    Neighborhoods_Analysis_Boundaries STRING,
+    RowID STRING,
+    case_location STRING,
+    data_as_of TIMESTAMP,
+    data_loaded_at TIMESTAMP,
+    Analysis_Neighborhoods SMALLINT
+)
+STORED AS ORC
+TBLPROPERTIES('transactional'='true');
+
+INSERT INTO TABLE fire_data
+SELECT call_number ,
+    unit_id ,
+    incident_number ,
+    call_type ,
+    TO_DATE(FROM_UNIXTIME(UNIX_TIMESTAMP(call_date, 'MM/dd/yyyy'))) ,
+    TO_DATE(FROM_UNIXTIME(UNIX_TIMESTAMP(watch_date, 'MM/dd/yyyy'))) ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.received_dttm, 'MM/dd/yyyy hh:mm:ss a')) ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.entry_dttm, 'MM/dd/yyyy hh:mm:ss a')) ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.dispatch_dttm, 'MM/dd/yyyy hh:mm:ss a')) ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.response_dttm, 'MM/dd/yyyy hh:mm:ss a')) ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.on_scene_dttm, 'MM/dd/yyyy hh:mm:ss a')) ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.transport_dttm, 'MM/dd/yyyy hh:mm:ss a')) ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.hospital_dttm, 'MM/dd/yyyy hh:mm:ss a')) ,
+    call_final_disposition ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.available_dttm, 'MM/dd/yyyy hh:mm:ss a')) ,
+    address ,
+    city,
+    zipcode ,
+    battalion ,
+    station_area ,
+    box ,
+    original_priority ,
+    priority ,
+    final_priority ,
+    als_unit ,
+    call_type_group ,
+    number_of_alarms ,
+    unit_type ,
+    unit_sequence_in_call_dispatch ,
+    fire_prevention_district ,
+    supervisor_district ,
+    neighborhoods_analysis_boundaries ,
+    rowid ,
+    case_location ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.data_as_of, 'MM/dd/yyyy hh:mm:ss a')) ,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(fire_staging.data_loaded_at, 'MM/dd/yyyy hh:mm:ss a')) ,
+    analysis_neighborhoods FROM fire_staging;
+    
+SELECT COUNT(DISTINCT(call_type)) Total_Distinct_Calls FROM fire_data;
+
++-----------------------+
+| total_distinct_calls  |
++-----------------------+
+| 33                    |
++-----------------------+
+
+Q2}
+
+SELECT DISTINCT(call_type) FROM fire_data;
+
++--------------------------------------+
+|              call_type               |
++--------------------------------------+
+| "Extrication / Entrapped (Machinery  |
+| Administrative                       |
+| Alarms                               |
+| Electrical Hazard                    |
+| Elevator / Escalator Rescue          |
+| Fuel Spill                           |
+| Gas Leak (Natural and LP Gases)      |
+| High Angle Rescue                    |
+| Marine Fire                          |
+| Mutual Aid / Assist Outside Agency   |
+| Odor (Strange / Unknown)             |
+| Oil Spill                            |
+| Other                                |
+| Structure Fire / Smoke in Building   |
+| Vehicle Fire                         |
+| Water Rescue                         |
+| Aircraft Emergency                   |
+| Assist Police                        |
+| Citizen Assist / Service Call        |
+| Confined Space / Structure Collapse  |
+| Explosion                            |
+| HazMat                               |
+| Industrial Accidents                 |
+| Lightning Strike (Investigation)     |
+| Medical Incident                     |
+| Outside Fire                         |
+| Smoke Investigation (Outside)        |
+| Structure Fire                       |
+| Suspicious Package                   |
+| Traffic Collision                    |
+| Train / Rail Fire                    |
+| Train / Rail Incident                |
+| Watercraft in Distress               |
++--------------------------------------+
+
+Q3}
+
+SELECT received_dttm, response_dttm, MINUTE(cast(response_dttm as TIMESTAMP) - cast(received_dttm as TIMESTAMP)) AS Minute_Diff FROM fire_data WHERE MINUTE(cast(response_dttm as TIMESTAMP) - cast(received_dttm as TIMESTAMP)) > 5 AND MINUTE(cast(response_dttm as TIMESTAMP) - cast(received_dttm as TIMESTAMP)) IS NOT NULL LIMIT 20;
+
++------------------------+------------------------+--------------+
+|     received_dttm      |     response_dttm      | minute_diff  |
++------------------------+------------------------+--------------+
+| 2008-05-30 13:32:15.0  | 2008-05-30 13:45:48.0  | 13           |
+| 2009-03-04 10:04:48.0  | 2009-03-04 10:14:04.0  | 9            |
+| 2008-11-27 17:48:55.0  | 2008-11-27 18:03:26.0  | 14           |
+| 2009-05-06 19:13:50.0  | 2009-05-06 19:22:23.0  | 8            |
+| 2009-04-01 08:27:57.0  | 2009-04-01 08:40:04.0  | 12           |
+| 2009-01-01 10:20:10.0  | 2009-01-01 10:26:32.0  | 6            |
+| 2009-07-06 20:43:17.0  | 2009-07-06 20:54:59.0  | 11           |
+| 2009-11-03 21:25:13.0  | 2009-11-03 21:31:26.0  | 6            |
+| 2010-02-12 18:29:47.0  | 2010-02-12 18:52:02.0  | 22           |
+| 2010-06-17 11:55:58.0  | 2010-06-17 12:02:46.0  | 6            |
+| 2010-10-02 14:10:01.0  | 2010-10-02 14:17:40.0  | 7            |
+| 2010-07-25 02:19:02.0  | 2010-07-25 02:30:20.0  | 11           |
+| 2010-05-08 07:38:54.0  | 2010-05-08 07:48:38.0  | 9            |
+| 2010-09-25 18:31:50.0  | 2010-09-25 19:02:49.0  | 30           |
+| 2010-11-02 00:19:39.0  | 2010-11-02 00:31:53.0  | 12           |
+| 2011-05-07 12:20:39.0  | 2011-05-07 12:29:14.0  | 8            |
+| 2011-08-26 16:02:27.0  | 2011-08-26 16:09:05.0  | 6            |
+| 2011-06-29 11:46:55.0  | 2011-06-29 11:54:08.0  | 7            |
+| 2011-07-27 16:51:16.0  | 2011-07-27 16:57:50.0  | 6            |
+| 2011-05-04 11:46:45.0  | 2011-05-04 11:53:56.0  | 7            |
++------------------------+------------------------+--------------+
+
+Q4}
+
+SELECT call_type, COUNT(call_type) AS Total_Calls FROM fire_data GROUP BY call_type ORDER BY COUNT(call_type) DESC;
+
++--------------------------------------+--------------+
+|              call_type               | total_calls  |
++--------------------------------------+--------------+
+| Medical Incident                     | 4247943      |
+| Alarms                               | 720968       |
+| Structure Fire                       | 714873       |
+| Traffic Collision                    | 259541       |
+| Other                                | 110855       |
+| Citizen Assist / Service Call        | 96222        |
+| Outside Fire                         | 85967        |
+| Water Rescue                         | 34061        |
+| Gas Leak (Natural and LP Gases)      | 30484        |
+| Vehicle Fire                         | 28378        |
+| Electrical Hazard                    | 21907        |
+| Structure Fire / Smoke in Building   | 18894        |
+| Elevator / Escalator Rescue          | 17952        |
+| Smoke Investigation (Outside)        | 14613        |
+| Odor (Strange / Unknown)             | 13673        |
+| Fuel Spill                           | 7038         |
+| HazMat                               | 4399         |
+| Industrial Accidents                 | 3333         |
+| Explosion                            | 3067         |
+| Train / Rail Incident                | 1715         |
+| Aircraft Emergency                   | 1512         |
+| Assist Police                        | 1508         |
+| High Angle Rescue                    | 1456         |
+| Watercraft in Distress               | 1237         |
+| "Extrication / Entrapped (Machinery  | 935          |
+| Confined Space / Structure Collapse  | 791          |
+| Mutual Aid / Assist Outside Agency   | 626          |
+| Oil Spill                            | 518          |
+| Marine Fire                          | 508          |
+| Suspicious Package                   | 368          |
+| Administrative                       | 345          |
+| Train / Rail Fire                    | 120          |
+| Lightning Strike (Investigation)     | 21           |
++--------------------------------------+--------------+
+
+Most common call type is Medical Incident.
+
+Q5}
+
+SELECT zipcode, COUNT(call_type) AS Total_Calls FROM fire_data GROUP BY zipcode ORDER BY COUNT(call_type) DESC;
+
++----------+--------------+
+| zipcode  | total_calls  |
++----------+--------------+
+| 94102    | 823275       |
+| 94103    | 798342       |
+| 94109    | 557097       |
+| 94110    | 533604       |
+| 94124    | 335451       |
+| 94112    | 297360       |
+| 94115    | 282898       |
+| 94107    | 251730       |
+| 94122    | 225381       |
+| 94133    | 220839       |
+| 94117    | 211640       |
+| 94114    | 190600       |
+| 94118    | 186560       |
+| 94134    | 174212       |
+| 94121    | 168955       |
+| 94132    | 154445       |
+| 94105    | 152494       |
+| 94108    | 145708       |
+| 94123    | 136932       |
+| 94116    | 136192       |
+| 94131    | 117945       |
+| 94111    | 106194       |
+| 94127    | 65168        |
+| 94104    | 44982        |
+| 94130    | 41498        |
+| 94158    | 38884        |
+| NULL     | 25404        |
+| 94129    | 22038        |
++----------+--------------+
+
+Q6}
+
+SELECT DISTINCT(neighborhoods_analysis_boundaries) FROM fire_data WHERE city='SF' AND zipcode IN (94102,94103) LIMIT 20;
+
++------------------------------------+
+| neighborhoods_analysis_boundaries  |
++------------------------------------+
+| Financial District/South Beach     |
+| Mission                            |
+| Mission Bay                        |
+| Nob Hill                           |
+| Potrero Hill                       |
+| South of Market                    |
+| Tenderloin                         |
+| Western Addition                   |
+| Castro/Upper Market                |
+| Hayes Valley                       |
++------------------------------------+
+
+Q7}
+
+SELECT SUM(response_dttm) AS Sum, AVG(response_dttm) AS Average, MIN(response_dttm) AS Minimum, MAX(response_dttm) AS Maximum FROM fire_data;
+
++-----------------------+-----------------------+------------------------+------------------------+
+|          sum          |        average        |        minimum         |        maximum         |
++-----------------------+-----------------------+------------------------+------------------------+
+| 8.208944902006204E15  | 1.3675516582830813E9  | 2000-04-12 21:11:51.0  | 2023-12-31 02:56:42.0  |
++-----------------------+-----------------------+------------------------+------------------------+
+
+Q8}
+
+SELECT COUNT(DISTINCT(YEAR(call_date))) AS Total_Distinct_Years FROM fire_data;
+
++-----------------------+
+| total_distinct_years  |
++-----------------------+
+| 24                    |
++-----------------------+
+
+Q9}
+
+WITH cte_weakofyear AS(SELECT weekofyear(fire_data.received_dttm) AS WeekNo FROM fire_data WHERE year (fire_data.received_dttm) = 2018)
+SELECT WeekNo , count(weekno) Count FROM cte_weakofyear GROUP BY WeekNo ORDER BY Count DESC LIMIT 1 ;
+
++---------+--------+
+| weekno  | count  |
++---------+--------+
+| 1       | 7545   |
++---------+--------+
+
+Q10}
+
+SELECT neighborhoods_analysis_boundaries, (unix_timestamp(fire_data.response_dttm)- unix_timestamp(fire_data.received_dttm)) AS Response 
+FROM fire_data WHERE City="SF" AND year(fire_data.response_dttm) = 2018 
+ORDER BY (unix_timestamp(fire_data.response_dttm)- unix_timestamp(fire_data.received_dttm)) DESC ;
+
++------------------------------------+-----------+
+| neighborhoods_analysis_boundaries  | response  |
++------------------------------------+-----------+
++------------------------------------+-----------+
+
+
+Q11}
+
+WITH md(deptno, maxsal) AS(
+    SELECT deptno, MAX(sal) FROM emp GROUP BY deptno
+)
+SELECT e.empno, e.ename, e.deptno, e.sal FROM emp e
+INNER JOIN md ON e.deptno = md.deptno
+WHERE e.sal = md.maxsal;
+
++-------+-------+--------+---------+
+| empno | ename | deptno | sal     |
++-------+-------+--------+---------+
+|  7698 | BLAKE |     30 | 2850.00 |
+|  7788 | SCOTT |     20 | 3000.00 |
+|  7839 | KING  |     10 | 5000.00 |
+|  7902 | FORD  |     20 | 3000.00 |
++-------+-------+--------+---------+
+
+Q12}
+
+WITH md(deptno, avgsal) AS(
+	SELECT deptno, AVG(sal) FROM emp GROUP BY deptno
+)
+SELECT d.deptno, d.dname, m.avgsal FROM dept d
+JOIN md m ON m.deptno=d.deptno;
+
++--------+------------+-------------+
+| deptno | dname      | avgsal      |
++--------+------------+-------------+
+|     10 | ACCOUNTING | 2916.666667 |
+|     20 | RESEARCH   | 2175.000000 |
+|     30 | SALES      | 1566.666667 |
++--------+------------+-------------+
+
+Q13}
+
+WITH md_dept(deptno, avgsal) AS(
+	SELECT deptno, AVG(sal) FROM emp GROUP BY deptno
+),
+md_job(job, avgsal) AS(
+	SELECT job, AVG(sal) FROM emp GROUP BY job
+)
+SELECT e.empno, e.ename, e.sal, d.dname, m1.avgsal AS DeptwiseAvgSal, e.job, m2.avgsal AS JobwiseAvgSal FROM emp e
+INNER JOIN dept d ON e.deptno=d.deptno
+INNER JOIN md_dept m1 ON e.deptno=m1.deptno
+INNER JOIN md_job m2 ON e.job=m2.job;
+
++-------+--------+---------+------------+----------------+-----------+---------------+
+| empno | ename  | sal     | dname      | DeptwiseAvgSal | job       | JobwiseAvgSal |
++-------+--------+---------+------------+----------------+-----------+---------------+
+|  7369 | SMITH  |  800.00 | RESEARCH   |    2175.000000 | CLERK     |   1037.500000 |
+|  7499 | ALLEN  | 1600.00 | SALES      |    1566.666667 | SALESMAN  |   1400.000000 |
+|  7521 | WARD   | 1250.00 | SALES      |    1566.666667 | SALESMAN  |   1400.000000 |
+|  7566 | JONES  | 2975.00 | RESEARCH   |    2175.000000 | MANAGER   |   2758.333333 |
+|  7654 | MARTIN | 1250.00 | SALES      |    1566.666667 | SALESMAN  |   1400.000000 |
+|  7698 | BLAKE  | 2850.00 | SALES      |    1566.666667 | MANAGER   |   2758.333333 |
+|  7782 | CLARK  | 2450.00 | ACCOUNTING |    2916.666667 | MANAGER   |   2758.333333 |
+|  7788 | SCOTT  | 3000.00 | RESEARCH   |    2175.000000 | ANALYST   |   3000.000000 |
+|  7839 | KING   | 5000.00 | ACCOUNTING |    2916.666667 | PRESIDENT |   5000.000000 |
+|  7844 | TURNER | 1500.00 | SALES      |    1566.666667 | SALESMAN  |   1400.000000 |
+|  7876 | ADAMS  | 1100.00 | RESEARCH   |    2175.000000 | CLERK     |   1037.500000 |
+|  7900 | JAMES  |  950.00 | SALES      |    1566.666667 | CLERK     |   1037.500000 |
+|  7902 | FORD   | 3000.00 | RESEARCH   |    2175.000000 | ANALYST   |   3000.000000 |
+|  7934 | MILLER | 1300.00 | ACCOUNTING |    2916.666667 | CLERK     |   1037.500000 |
++-------+--------+---------+------------+----------------+-----------+---------------+
+
+Q14}
+
+WITH md(ename, sal, Category) AS(
+	SELECT ename, sal, 
+	CASE
+	  WHEN sal<1500 THEN 'Poor'
+	  WHEN sal BETWEEN 1500 AND 2500 THEN 'Middle'
+	  ELSE 'Rich'
+	END AS Category
+	FROM emp
+)
+SELECT Category, COUNT(ename) CategoryCount FROM md GROUP BY Category;
+
++----------+---------------+
+| Category | CategoryCount |
++----------+---------------+
+| Poor     |             6 |
+| Middle   |             3 |
+| Rich     |             5 |
++----------+---------------+
+
+Q15}
+
+WITH md(empno, ename, sal, dname, Category) AS(
+	SELECT empno, ename, sal, dname, 
+	CASE
+	  WHEN sal<1500 THEN 'Poor'
+	  WHEN sal BETWEEN 1500 AND 2500 THEN 'Middle'
+	  ELSE 'Rich'
+	END AS Category
+	FROM emp
+	INNER JOIN dept ON emp.deptno=dept.deptno
+)
+SELECT empno, ename, sal, dname, Category FROM md;
+
++-------+--------+---------+------------+----------+
+| empno | ename  | sal     | dname      | Category |
++-------+--------+---------+------------+----------+
+|  7369 | SMITH  |  800.00 | RESEARCH   | Poor     |
+|  7499 | ALLEN  | 1600.00 | SALES      | Middle   |
+|  7521 | WARD   | 1250.00 | SALES      | Poor     |
+|  7566 | JONES  | 2975.00 | RESEARCH   | Rich     |
+|  7654 | MARTIN | 1250.00 | SALES      | Poor     |
+|  7698 | BLAKE  | 2850.00 | SALES      | Rich     |
+|  7782 | CLARK  | 2450.00 | ACCOUNTING | Middle   |
+|  7788 | SCOTT  | 3000.00 | RESEARCH   | Rich     |
+|  7839 | KING   | 5000.00 | ACCOUNTING | Rich     |
+|  7844 | TURNER | 1500.00 | SALES      | Middle   |
+|  7876 | ADAMS  | 1100.00 | RESEARCH   | Poor     |
+|  7900 | JAMES  |  950.00 | SALES      | Poor     |
+|  7902 | FORD   | 3000.00 | RESEARCH   | Rich     |
+|  7934 | MILLER | 1300.00 | ACCOUNTING | Poor     |
++-------+--------+---------+------------+----------+
+
+Q16}
+
+WITH md(ename, sal, dname, Category) AS(
+	SELECT ename, sal, dname, 
+	CASE
+	  WHEN sal<1500 THEN 'Poor'
+	  WHEN sal BETWEEN 1500 AND 2500 THEN 'Middle'
+	  ELSE 'Rich'
+	END AS Category
+	FROM emp
+	INNER JOIN dept ON emp.deptno=dept.deptno
+)
+SELECT dname, Category, COUNT(ename) FROM md GROUP BY dname, Category ORDER BY dname;
+
++------------+----------+--------------+
+| dname      | Category | COUNT(ename) |
++------------+----------+--------------+
+| ACCOUNTING | Middle   |            1 |
+| ACCOUNTING | Poor     |            1 |
+| ACCOUNTING | Rich     |            1 |
+| RESEARCH   | Poor     |            2 |
+| RESEARCH   | Rich     |            3 |
+| SALES      | Middle   |            2 |
+| SALES      | Poor     |            3 |
+| SALES      | Rich     |            1 |
++------------+----------+--------------+
+

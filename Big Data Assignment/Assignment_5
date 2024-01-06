@@ -1,0 +1,299 @@
+Q1}
+
+from pyhive import hive
+
+# Hive configuration
+host_name = 'localhost'
+port = 10000
+user = 'oem'
+password = ' '  # Assuming no password set, else enter the password
+db_name = 'movie_recomm_hive'
+
+# Get user input for movie ID
+user_movie_id = input("Enter the movie ID: ")
+
+# Establish a connection to Hive
+conn = hive.Connection(
+    host=host_name,
+    port=port,
+    username=user,
+    password=password,
+    database=db_name,
+    auth='CUSTOM'
+)
+
+# Get the cursor object
+cur = conn.cursor()
+
+# Construct the SQL query with user input for movie ID
+sql_query = f"""
+    SELECT DISTINCT related_movies.title
+    FROM (
+        SELECT m1.title AS title, cm.m1 AS movieId 
+        FROM corr_movies cm
+        JOIN movies m1 ON cm.m2 = m1.movieId 
+        WHERE cm.cnt > 10 AND cm.cor > 0.7 AND cm.m1 = {user_movie_id}
+
+        UNION
+
+        SELECT m2.title AS title, cm.m2 AS movieId 
+        FROM corr_movies cm
+        JOIN movies m2 ON cm.m1 = m2.movieId 
+        WHERE cm.cnt > 10 AND cm.cor > 0.7 AND cm.m2 = {user_movie_id}
+    ) AS related_movies
+"""
+
+try:
+    # Execute the SQL query using the cursor
+    cur.execute(sql_query)
+
+    # Collect/process the result
+    result = cur.fetchall()
+    
+    # Display only the movie names
+    if result:
+        print("Movie recommendations based on your input:")
+        for row in result:
+            print(row[0])  # Printing only the movie title
+    else:
+        print("No movie recommendations found for this movie ID.")
+except Exception as e:
+    print(f"An error occurred: {e}")
+
+# Close the connection
+conn.close()
+
+Q2}
+
+CREATE DATABASE assignment5;
+
+USE assignment5;
+
+CREATE TABLE emp_staging (empno INT, ename STRING, job STRING, mgr INT, hire DATE, sal DOUBLE, comm DOUBLE, deptno INT) ROW FORMAT DELIMITED FIELDS SEPERATED BY ',' STORED AS TEXTFILE;
+
+CREATE TABLE emp_staging (empno INT, ename STRING, job STRING, mgr INT, hire DATE, sal DOUBLE, comm DOUBLE, deptno INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+
+DESCRIBE emp_staging;
+
++-----------+------------+----------+
+| col_name  | data_type  | comment  |
++-----------+------------+----------+
+| empno     | int        |          |
+| ename     | string     |          |
+| job       | string     |          |
+| mgr       | int        |          |
+| hire      | date       |          |
+| sal       | double     |          |
+| comm      | double     |          |
+| deptno    | int        |          |
++-----------+------------+----------+
+
+LOAD DATA LOCAL INPATH '/home/sumit1/BigData/data/emp.csv' INTO TABLE emp_staging;
+
+SELECT *FROM emp_staging LIMIT 20;
+
++--------------------+--------------------+------------------+------------------+-------------------+------------------+-------------------+---------------------+
+| emp_staging.empno  | emp_staging.ename  | emp_staging.job  | emp_staging.mgr  | emp_staging.hire  | emp_staging.sal  | emp_staging.comm  | emp_staging.deptno  |
++--------------------+--------------------+------------------+------------------+-------------------+------------------+-------------------+---------------------+
+| 7369               | SMITH              | CLERK            | 7902             | 1980-12-17        | 800.0            | NULL              | 20                  |
+| 7499               | ALLEN              | SALESMAN         | 7698             | 1981-02-20        | 1600.0           | 300.0             | 30                  |
+| 7521               | WARD               | SALESMAN         | 7698             | 1981-02-22        | 1250.0           | 500.0             | 30                  |
+| 7566               | JONES              | MANAGER          | 7839             | 1981-04-02        | 2975.0           | NULL              | 20                  |
+| 7654               | MARTIN             | SALESMAN         | 7698             | 1981-09-28        | 1250.0           | 1400.0            | 30                  |
+| 7698               | BLAKE              | MANAGER          | 7839             | 1981-05-01        | 2850.0           | NULL              | 30                  |
+| 7782               | CLARK              | MANAGER          | 7839             | 1981-06-09        | 2450.0           | NULL              | 10                  |
+| 7788               | SCOTT              | ANALYST          | 7566             | 1982-12-09        | 3000.0           | NULL              | 20                  |
+| 7839               | KING               | PRESIDENT        | NULL             | 1981-11-17        | 5000.0           | NULL              | 10                  |
+| 7844               | TURNER             | SALESMAN         | 7698             | 1981-09-08        | 1500.0           | 0.0               | 30                  |
+| 7876               | ADAMS              | CLERK            | 7788             | 1983-01-12        | 1100.0           | NULL              | 20                  |
+| 7900               | JAMES              | CLERK            | 7698             | 1981-12-03        | 950.0            | NULL              | 30                  |
+| 7902               | FORD               | ANALYST          | 7566             | 1981-12-03        | 3000.0           | NULL              | 20                  |
+| 7934               | MILLER             | CLERK            | 7782             | 1982-01-23        | 1300.0           | NULL              | 10                  |
++--------------------+--------------------+------------------+------------------+-------------------+------------------+-------------------+---------------------+
+
+CREATE TABLE emp_job_part (empno INT, ename STRING, mgr INT, hire DATE, sal DOUBLE, comm DOUBLE, deptno INT) PARTITIONED BY (job STRING) STORED AS  ORC;
+
+INSERT INTO emp_job_part PARTITION (job) SELECT empno, ename, mgr, hire, sal, comm, deptno, job FROM emp_staging;
+
+SELECT *FROM emp_job_part LIMIT 20;
+
++---------------------+---------------------+-------------------+--------------------+-------------------+--------------------+----------------------+-------------------+
+| emp_job_part.empno  | emp_job_part.ename  | emp_job_part.mgr  | emp_job_part.hire  | emp_job_part.sal  | emp_job_part.comm  | emp_job_part.deptno  | emp_job_part.job  |
++---------------------+---------------------+-------------------+--------------------+-------------------+--------------------+----------------------+-------------------+
+| 7788                | SCOTT               | 7566              | 1982-12-09         | 3000.0            | NULL               | 20                   | ANALYST           |
+| 7902                | FORD                | 7566              | 1981-12-03         | 3000.0            | NULL               | 20                   | ANALYST           |
+| 7369                | SMITH               | 7902              | 1980-12-17         | 800.0             | NULL               | 20                   | CLERK             |
+| 7876                | ADAMS               | 7788              | 1983-01-12         | 1100.0            | NULL               | 20                   | CLERK             |
+| 7900                | JAMES               | 7698              | 1981-12-03         | 950.0             | NULL               | 30                   | CLERK             |
+| 7934                | MILLER              | 7782              | 1982-01-23         | 1300.0            | NULL               | 10                   | CLERK             |
+| 7566                | JONES               | 7839              | 1981-04-02         | 2975.0            | NULL               | 20                   | MANAGER           |
+| 7698                | BLAKE               | 7839              | 1981-05-01         | 2850.0            | NULL               | 30                   | MANAGER           |
+| 7782                | CLARK               | 7839              | 1981-06-09         | 2450.0            | NULL               | 10                   | MANAGER           |
+| 7839                | KING                | NULL              | 1981-11-17         | 5000.0            | NULL               | 10                   | PRESIDENT         |
+| 7499                | ALLEN               | 7698              | 1981-02-20         | 1600.0            | 300.0              | 30                   | SALESMAN          |
+| 7521                | WARD                | 7698              | 1981-02-22         | 1250.0            | 500.0              | 30                   | SALESMAN          |
+| 7654                | MARTIN              | 7698              | 1981-09-28         | 1250.0            | 1400.0             | 30                   | SALESMAN          |
+| 7844                | TURNER              | 7698              | 1981-09-08         | 1500.0            | 0.0                | 30                   | SALESMAN          |
++---------------------+---------------------+-------------------+--------------------+-------------------+--------------------+----------------------+-------------------+
+
+Q3}
+
+CREATE TABLE emp_job_dept_part (empno INT, ename STRING, mgr INT, hire DATE, sal DOUBLE, comm DOUBLE) PARTITIONED BY (job STRING, deptno INT) CLUSTERED BY (empno) INTO 2 BUCKETS STORED AS ORC;
+
+INSERT INTO emp_job_dept_part PARTITION (job, deptno) SELECT empno, ename, mgr, hire, sal, comm, job, deptno FROM emp_staging;
+
+SELECT *FROM emp_job_dept_part LIMIT 20;
+
++--------------------------+--------------------------+------------------------+-------------------------+------------------------+-------------------------+------------------------+---------------------------+
+| emp_job_dept_part.empno  | emp_job_dept_part.ename  | emp_job_dept_part.mgr  | emp_job_dept_part.hire  | emp_job_dept_part.sal  | emp_job_dept_part.comm  | emp_job_dept_part.job  | emp_job_dept_part.deptno  |
++--------------------------+--------------------------+------------------------+-------------------------+------------------------+-------------------------+------------------------+---------------------------+
+| 7902                     | FORD                     | 7566                   | 1981-12-03              | 3000.0                 | NULL                    | ANALYST                | 20                        |
+| 7788                     | SCOTT                    | 7566                   | 1982-12-09              | 3000.0                 | NULL                    | ANALYST                | 20                        |
+| 7934                     | MILLER                   | 7782                   | 1982-01-23              | 1300.0                 | NULL                    | CLERK                  | 10                        |
+| 7876                     | ADAMS                    | 7788                   | 1983-01-12              | 1100.0                 | NULL                    | CLERK                  | 20                        |
+| 7369                     | SMITH                    | 7902                   | 1980-12-17              | 800.0                  | NULL                    | CLERK                  | 20                        |
+| 7900                     | JAMES                    | 7698                   | 1981-12-03              | 950.0                  | NULL                    | CLERK                  | 30                        |
+| 7782                     | CLARK                    | 7839                   | 1981-06-09              | 2450.0                 | NULL                    | MANAGER                | 10                        |
+| 7566                     | JONES                    | 7839                   | 1981-04-02              | 2975.0                 | NULL                    | MANAGER                | 20                        |
+| 7698                     | BLAKE                    | 7839                   | 1981-05-01              | 2850.0                 | NULL                    | MANAGER                | 30                        |
+| 7839                     | KING                     | NULL                   | 1981-11-17              | 5000.0                 | NULL                    | PRESIDENT              | 10                        |
+| 7844                     | TURNER                   | 7698                   | 1981-09-08              | 1500.0                 | 0.0                     | SALESMAN               | 30                        |
+| 7654                     | MARTIN                   | 7698                   | 1981-09-28              | 1250.0                 | 1400.0                  | SALESMAN               | 30                        |
+| 7499                     | ALLEN                    | 7698                   | 1981-02-20              | 1600.0                 | 300.0                   | SALESMAN               | 30                        |
+| 7521                     | WARD                     | 7698                   | 1981-02-22              | 1250.0                 | 500.0                   | SALESMAN               | 30                        |
++--------------------------+--------------------------+------------------------+-------------------------+------------------------+-------------------------+------------------------+---------------------------+
+
+Q4}
+
+CREATE TABLE fire_staging (
+    Call_Number BIGINT,
+    Unit_ID STRING,
+    Incident_Number BIGINT,
+    Call_Type STRING,
+    Call_Date STRING,
+    Watch_Date STRING,
+    Received_DtTm STRING,
+    Entry_DtTm STRING,
+    Dispatch_DtTm STRING,
+    Response_DtTm STRING,
+    On_Scene_DtTm STRING,
+    Transport_DtTm STRING,
+    Hospital_DtTm STRING,
+    Call_Final_Disposition STRING,
+    Available_DtTm STRING,
+    Address STRING,
+    City STRING,
+    Zipcode INT,
+    Battalion STRING,
+    Station_Area SMALLINT,
+    Box INT,
+    Original_Priority SMALLINT,
+    Priority SMALLINT,
+    Final_Priority SMALLINT,
+    ALS_Unit STRING,
+    Call_Type_Group STRING,
+    Number_of_Alarms SMALLINT,
+    Unit_Type STRING,
+    Unit_sequence_in_call_dispatch SMALLINT,
+    Fire_Prevention_District SMALLINT,
+    Supervisor_District SMALLINT,
+    Neighborhoods_Analysis_Boundaries STRING,
+    RowID STRING,
+    case_location STRING,
+    data_as_of STRING,
+    data_loaded_at STRING,
+    Analysis_Neighborhoods SMALLINT
+) ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+TBLPROPERTIES('skip.header.line.count'='1');
+
+LOAD DATA LOCAL INPATH '/home/sumit1/BigData/data/Fire_Department_Calls_for_Service.csv' INTO TABLE fire_staging;
+
+SELECT *FROM fire_staging LIMIT 10;
+
+
+
+Q5}
+
+CREATE TABLE fire_data( Call_Number BIGINT,
+    Unit_ID STRING,
+    Incident_Number BIGINT,
+    Call_Type STRING,
+    Call_Date STRING,
+    Watch_Date STRING,
+    Received_DtTm STRING,
+    Entry_DtTm STRING,
+    Dispatch_DtTm STRING,
+    Response_DtTm STRING,
+    On_Scene_DtTm STRING,
+    Transport_DtTm STRING,
+    Hospital_DtTm STRING,
+    Call_Final_Disposition STRING,
+    Available_DtTm STRING,
+    Address STRING,
+    Zipcode INT,
+    Battalion STRING,
+    Station_Area SMALLINT,
+    Box INT,
+    Original_Priority SMALLINT,
+    Priority SMALLINT,
+    Final_Priority SMALLINT,
+    ALS_Unit STRING,
+    Call_Type_Group STRING,
+    Number_of_Alarms SMALLINT,
+    Unit_Type STRING,
+    Unit_sequence_in_call_dispatch SMALLINT,
+    Fire_Prevention_District SMALLINT,
+    Supervisor_District SMALLINT,
+    Neighborhoods_Analysis_Boundaries STRING,
+    RowID STRING,
+    case_location STRING,
+    data_as_of STRING,
+    data_loaded_at STRING,
+    Analysis_Neighborhoods SMALLINT
+)
+PARTITIONED BY (City STRING)
+CLUSTERED BY (Call_Number) INTO 4 BUCKETS
+STORED AS ORC
+TBLPROPERTIES('transactional'='true');
+
+INSERT INTO TABLE fire_data PARTITION(City)
+SELECT Call_Number ,
+    Unit_ID ,
+    Incident_Number ,
+    Call_Type ,
+    Call_Date ,
+    Watch_Date ,
+    Received_DtTm ,
+    Entry_DtTm ,
+    Dispatch_DtTm ,
+    Response_DtTm ,
+    On_Scene_DtTm ,
+    Transport_DtTm ,
+    Hospital_DtTm ,
+    Call_Final_Disposition ,
+    Available_DtTm ,
+    Address ,
+    Zipcode ,
+    Battalion ,
+    Station_Area ,
+    Box ,
+    Original_Priority ,
+    Priority ,
+    Final_Priority ,
+    ALS_Unit ,
+    Call_Type_Group ,
+    Number_of_Alarms ,
+    Unit_Type ,
+    Unit_sequence_in_call_dispatch ,
+    Fire_Prevention_District ,
+    Supervisor_District ,
+    Neighborhoods_Analysis_Boundaries ,
+    RowID ,
+    case_location ,
+    data_as_of ,
+    data_loaded_at ,
+    Analysis_Neighborhoods,City FROM fire_staging;
+    
+
